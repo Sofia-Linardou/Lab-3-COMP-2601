@@ -15,13 +15,12 @@ int main()
 	char ch;
 	while(1)
 	{
-		printDecimal(Count);
-		//printHex(Count);
+		ch = egetchar();
+		eputchar(ch);
 		eputs("\r\n");
-		delay(10000);  // Wait
-		Count++;
 	}
 }
+
 void pinMode(GPIO_TypeDef *Port, uint32_t BitNumber, uint32_t Mode)
 {
 	// This function writes the given Mode bits to the appropriate location for
@@ -47,6 +46,7 @@ void eputchar(char c)
 	while( (USART2->ISR & (1 << 7)) == 0); 
 	USART2->TDR = c;
 }
+
 char egetchar()
 {
 	// Check if an Overrun Error (ORE) happened (Bit 3 of ISR)

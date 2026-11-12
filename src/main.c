@@ -71,16 +71,18 @@ void eputs(char *String)
 }
 void printDecimal(uint32_t Value)
 {
+	// create a decimal string array that can store up to 10 digits (the eleventh is the 'stop' bit)
 	char DecimalString[11]; // a 32 bit value can go up to about 4 billion
 													// That's 10 digits plus a NULL character 
-	DecimalString[10] = 0;  // terminate the string
-	int index = 9;
-	while (index >= 0)
+	DecimalString[10] = 0;  // terminate the string // make the last element a zero - ie the stop bit
+	int index = 9; // the maximum possible index now is 9.
+	while (DecimalString[index] == 0) // counts up to nine
 	{
-		DecimalString[index] = (Value % 10) + '0';
-		Value = Value / 10;
+		DecimalString[index] = (Value % 10) + '0'; // get the remainder of the value and add a '0;
+		Value = Value / 10; //
 		index--;
 	}
+
 	eputs(DecimalString);
 }
 void initClockHSI16()

@@ -6,6 +6,7 @@ void eputchar(char c);
 char egetchar(void);
 void eputs(char *String); 
 void printDecimal(uint32_t Value);
+void printHex(uint32_t Value);
 void initSerial(void);
 int main()
 {
@@ -15,6 +16,7 @@ int main()
 	while(1)
 	{
 		printDecimal(Count);
+		//printHex(Count);
 		eputs("\r\n");
 		delay(10000);  // Wait
 		Count++;
@@ -83,6 +85,21 @@ void printDecimal(uint32_t Value)
 		index--; // decrement index
 	}
 	eputs(&DecimalString[index + 1]); // for the index (+1) at which we exit the while, get the location and print
+}
+
+void printHex(uint32_t Value)
+{
+	char HexString[11];
+	HexString[10] = 0; // same as before
+	int index = 9;
+
+	while (Value > 0)
+	{
+		HexString[index] = (Value % 10) + '0';
+		Value = Value / 10;
+		index--;
+	}
+	eputs(&HexString[index + 1]);
 }
 
 void initClockHSI16()

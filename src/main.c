@@ -6,18 +6,26 @@ void eputchar(char c);
 char egetchar(void);
 void eputs(char *String); 
 void printDecimal(uint32_t Value);
+void ledOn(void);
+void ledOff(void); 
 // void printHex(uint32_t Value);
 void initSerial(void);
 int main()
 {
 	initSerial();
+	pinMode(GPIOA, 0, 1); // Make GPIOA bit 0 an output
 	uint32_t Count=0;
 	char ch;
 	while(1)
 	{
 		ch = egetchar();
+		if (ch == 'a')
+		{
+			ledOn();
+		}
 		eputchar(ch);
 		eputs("\r\n");
+		ledOff(); 
 	}
 }
 
@@ -140,4 +148,20 @@ void initSerial()
 	USART2->BRR = BaudRateDivisor;
 	USART2->CR1 = ( (1 << 2) | (1 << 3) );
 	USART2->CR1 |= (1 << 0);
+}
+
+void ledOn()   
+{   
+    uint32_t original;   
+    original = GPIOA->ODR;   
+    original = original | 1;   
+    GPIOA->ODR = original;
+}
+
+void ledOff()   
+{   
+    uint32_t original;   
+    original = GPIOA->ODR;   
+    original = original & ~(1);   
+    GPIOA->ODR = original;   
 }

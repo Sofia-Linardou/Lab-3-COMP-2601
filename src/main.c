@@ -76,15 +76,15 @@ void printDecimal(uint32_t Value)
 													// That's 10 digits plus a NULL character 
 	DecimalString[10] = 0;  // terminate the string // make the last element a zero - ie the stop bit
 	int index = 9; // the maximum possible index now is 9.
-	while (DecimalString[index] == 0) // counts up to nine
+	while (Value > 0) // counts up to nine
 	{
 		DecimalString[index] = (Value % 10) + '0'; // get the remainder of the value and add a '0;
-		Value = Value / 10; //
-		index--;
+		Value = Value / 10; //divide this value by 10 to get decimal value
+		index--; // decrement index
 	}
-
-	eputs(DecimalString);
+	eputs(&DecimalString[index + 1]); // for the index (+1) at which we exit the while, get the location and print
 }
+
 void initClockHSI16()
 {
     // Use the HSI16 clock as the system clock - allows operation down to 1.5V

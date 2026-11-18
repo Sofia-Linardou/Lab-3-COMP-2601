@@ -85,7 +85,7 @@ void printDecimal(uint32_t Value)
     char DecimalString[11];
     DecimalString[10] = 0;  // make the last element a zero - i.e. the stop bit
     int index = 9; // the maximum possible index now is 9.
-    while (Value > 0) // counts up to nine
+    while (Value > 0) // while the value is positive
     {
         DecimalString[index] = (Value % 10) + '0'; // get the remainder of the value and add a '0’;
         Value = Value / 10; //divide this value by 10 to get decimal value

@@ -23,17 +23,17 @@ int main()
 	char ch;
 	while(1)
 	{
-		// printDecimal(Count);
+		printDecimal(Count);
 		printHex(Count);
-		// ch = egetchar();
-		// if ((ch == 'a') || (ch == 'A'))
-		// {
-		// 	ledOn();
-		// 	delay(500000);
-		// }
-		// eputchar(ch);
-		// eputs("\r\n");
-		// ledOff(); 
+		ch = egetchar();
+		if ((ch == 'a') || (ch == 'A'))
+		{
+			ledOn();
+			delay(500000);
+		}
+		eputchar(ch);
+		eputs("\r\n");
+		ledOff(); 
 	}
 }
 

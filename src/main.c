@@ -103,16 +103,15 @@ void printDecimal(uint32_t Value)
 
 void printHex(uint32_t Value)
 {
-	char HexString[11];
-	HexString[10] = 0;
-	int index = 9;
-	while (index > 0)
+	char HexString[11]; // set up a big array to accomodate hex value
+	HexString[10] = 0; // set last elemnt to 0 to terminate - stop bit
+	int index = 9; // start with LSB
+	while (index > 0) // check for end of array
 	{
-		// get decimal value
-		// for first iteration, set element of index 9 to remainder of value%16 ==> gives LSB
+		// get remainder of value - this is the first digit
 		int remainder = (Value % 16);
-		if (remainder > 9) 
-		{ // need to map to letters
+		if (remainder > 9) // check if that will be an integer or letter
+		{ // if remainder > 9, need to map to letters
 			switch (remainder)
 			{
 				case 10:
@@ -134,10 +133,11 @@ void printHex(uint32_t Value)
 					remainder = 'F';
 					break;
 			}
+			// add remainder value to hex string array
 			HexString[index] = remainder; 
-			index--;
+			index--; // decrement index
 		}
-		eputs(&HexString[index + 1]);
+		eputs(&HexString[index + 1]); // for the index at which we exit while, get the location and print
 	}
 }
 

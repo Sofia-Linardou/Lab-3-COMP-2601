@@ -2,6 +2,7 @@
 // Simulation Link https://wokwi.com/projects/481019273412530177
 
 #include <stdint.h>
+#include <stdio.h>
 #include <stm32l031xx.h>
 void pinMode(GPIO_TypeDef *Port, uint32_t BitNumber, uint32_t Mode);
 void delay(volatile uint32_t dly);
@@ -22,16 +23,17 @@ int main()
 	char ch;
 	while(1)
 	{
-		// printDecimal(Count);
-		ch = egetchar();
-		if ((ch == 'a') || (ch == 'A'))
-		{
-			ledOn();
-			delay(500000);
-		}
-		eputchar(ch);
-		eputs("\r\n");
-		ledOff(); 
+		printDecimal(Count);
+		printHex(Count);
+		// ch = egetchar();
+		// if ((ch == 'a') || (ch == 'A'))
+		// {
+		// 	ledOn();
+		// 	delay(500000);
+		// }
+		// eputchar(ch);
+		// eputs("\r\n");
+		// ledOff(); 
 	}
 }
 
@@ -106,39 +108,48 @@ void printHex(uint32_t Value)
 	char HexString[11]; // set up a big array to accomodate hex value
 	HexString[10] = 0; // set last elemnt to 0 to terminate - stop bit
 	int index = 9; // start with LSB
-	while (index > 0) // check for end of array
+	while (Value > 0)
 	{
 		// get remainder of value - this is the first digit
 		int remainder = (Value % 16);
+		char hex_character;
+		printf("\n rem 16: %d ", remainder);
 		if (remainder > 9) // check if that will be an integer or letter
 		{ // if remainder > 9, need to map to letters
 			switch (remainder)
 			{
 				case 10:
-					remainder = 'A';
+					hex_character = 'A';
 					break;
 				case 11:
-					remainder = 'B';
+					hex_character = 'B';
 					break;
 				case 12:
-					remainder = 'C';
+					hex_character = 'C';
 					break;
 				case 13:
-					remainder = 'D';
+					hex_character = 'D';
 					break;
 				case 14:
-					remainder = 'E';
+					hex_character = 'E';
 					break;
 				case 15:
-					remainder = 'F';
+					hex_character = 'F';
 					break;
 			}
 			// add remainder value to hex string array
+			printf("\n after mapp %d", hex_character);
+			HexString[index] = hex_character; 
+		} 
+		else
+		{
 			HexString[index] = remainder; 
-			index--; // decrement index
 		}
-		eputs(&HexString[index + 1]); // for the index at which we exit while, get the location and print
+		Value = Value / 16;
+		printf("value: %d \n", Value);
+		index--; // decrement index
 	}
+	eputs(&HexString[index + 1]); // for the index at which we exit while, get the location and print
 }
 
 void initClockHSI16()

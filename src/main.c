@@ -17,23 +17,21 @@ void initSerial(void);
 int main()
 {
 	initSerial();
-	// pinMode(GPIOA, 0, 1); // Make GPIOA bit 0 an output
-	uint32_t Count=0;
-	// char ch;
+	pinMode(GPIOA, 0, 1); // Make GPIOA bit 0 an output
+	uint32_t Count=50;
+	char ch;
 	while(1)
 	{
-		printDecimal(Count);
+		// printDecimal(Count);
+		ch = egetchar();
+		if ((ch == 'a') || (ch == 'A'))
+		{
+			ledOn();
+			delay(500000);
+		}
+		eputchar(ch);
 		eputs("\r\n");
-		delay(10000);  // Wait
-		Count++;
-		// ch = egetchar();
-		// if (ch == 'a')
-		// {
-		// 	ledOn();
-		// }
-		// eputchar(ch);
-		// eputs("\r\n");
-		// ledOff(); 
+		ledOff(); 
 	}
 }
 
@@ -103,20 +101,21 @@ void printDecimal(uint32_t Value)
 	eputs(&DecimalString[index + 1]); // for the index (+1) at which we exit the while, get the location and print
 }
 
-// void printHex(uint32_t Value)
-// {
-// 	char HexString[11];
-// 	HexString[10] = 0; // same as before
-// 	int index = 9;
+void printHex(uint32_t Value)
+{
+	int remainder = Value % 10; // get decimal value?
+	// char HexString[11];
+	// HexString[10] = 0; // same as before
+	// int index = 9;
 
-// 	while (Value > 0)
-// 	{
-// 		HexString[index] = (Value % 10) + '0';
-// 		Value = Value / 10;
-// 		index--;
-// 	}
-// 	eputs(&HexString[index + 1]);
-// }
+	// while (Value > 0)
+	// {
+	// 	HexString[index] = (Value % 10) + '0';
+	// 	Value = Value / 10;
+	// 	index--;
+	// }
+	// eputs(&HexString[index + 1]);
+}
 
 void initClockHSI16()
 {

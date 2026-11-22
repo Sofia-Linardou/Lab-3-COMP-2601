@@ -19,11 +19,11 @@ int main()
 {
 	initSerial();
 	pinMode(GPIOA, 0, 1); // Make GPIOA bit 0 an output
-	uint32_t Count=50;
+	uint32_t Count = 250;
 	char ch;
 	while(1)
 	{
-		printDecimal(Count);
+		// printDecimal(Count);
 		printHex(Count);
 		// ch = egetchar();
 		// if ((ch == 'a') || (ch == 'A'))
@@ -113,7 +113,6 @@ void printHex(uint32_t Value)
 		// get remainder of value - this is the first digit
 		int remainder = (Value % 16);
 		char hex_character;
-		printf("\n rem 16: %d ", remainder);
 		if (remainder > 9) // check if that will be an integer or letter
 		{ // if remainder > 9, need to map to letters
 			switch (remainder)
@@ -138,7 +137,6 @@ void printHex(uint32_t Value)
 					break;
 			}
 			// add remainder value to hex string array
-			printf("\n after mapp %d", hex_character);
 			HexString[index] = hex_character; 
 		} 
 		else
@@ -146,7 +144,6 @@ void printHex(uint32_t Value)
 			HexString[index] = remainder; 
 		}
 		Value = Value / 16;
-		printf("value: %d \n", Value);
 		index--; // decrement index
 	}
 	eputs(&HexString[index + 1]); // for the index at which we exit while, get the location and print

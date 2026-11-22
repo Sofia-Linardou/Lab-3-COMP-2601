@@ -11,7 +11,7 @@ void eputs(char *String);
 void printDecimal(uint32_t Value);
 void ledOn(void);
 void ledOff(void); 
-// void printHex(uint32_t Value);
+void printHex(uint32_t Value);
 void initSerial(void);
 
 int main()
@@ -103,18 +103,42 @@ void printDecimal(uint32_t Value)
 
 void printHex(uint32_t Value)
 {
-	int remainder = Value % 10; // get decimal value?
-	// char HexString[11];
-	// HexString[10] = 0; // same as before
-	// int index = 9;
-
-	// while (Value > 0)
-	// {
-	// 	HexString[index] = (Value % 10) + '0';
-	// 	Value = Value / 10;
-	// 	index--;
-	// }
-	// eputs(&HexString[index + 1]);
+	char HexString[11];
+	HexString[10] = 0;
+	int index = 9;
+	while (index > 0)
+	{
+		// get decimal value
+		// for first iteration, set element of index 9 to remainder of value%16 ==> gives LSB
+		int remainder = (Value % 16);
+		if (remainder > 9) 
+		{ // need to map to letters
+			switch (remainder)
+			{
+				case 10:
+					remainder = 'A';
+					break;
+				case 11:
+					remainder = 'B';
+					break;
+				case 12:
+					remainder = 'C';
+					break;
+				case 13:
+					remainder = 'D';
+					break;
+				case 14:
+					remainder = 'E';
+					break;
+				case 15:
+					remainder = 'F';
+					break;
+			}
+			HexString[index] = remainder; 
+			index--;
+		}
+		eputs(&HexString[index + 1]);
+	}
 }
 
 void initClockHSI16()
